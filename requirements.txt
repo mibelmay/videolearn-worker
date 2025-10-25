@@ -1,0 +1,6 @@
+flask
+requests
+python-dotenv
+openai-whisper
+yt-dlp
+ffmpeg-python
