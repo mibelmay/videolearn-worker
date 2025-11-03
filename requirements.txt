@@ -1,6 +1,9 @@
-flask
+fastapi 
+uvicorn
 requests
 python-dotenv
-openai-whisper
+faster-whisper
 yt-dlp
 ffmpeg-python
+aiohttp
+logging
