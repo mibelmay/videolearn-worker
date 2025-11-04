@@ -6,4 +6,3 @@ faster-whisper
 yt-dlp
 ffmpeg-python
 aiohttp
-logging
