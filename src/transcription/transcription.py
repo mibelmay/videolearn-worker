@@ -2,7 +2,19 @@ import os
 import tempfile
 import ffmpeg
 import yt_dlp
+import logging
 from faster_whisper import WhisperModel
+from dotenv import load_dotenv
+
+load_dotenv()
+
+WHISPER_MODEL = os.getenv("WHISPER_MODEL")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
+logger = logging.getLogger("videolearn")
 
 
 def download_audio_from_video(video_url: str) -> str:
@@ -53,13 +65,13 @@ def transcribe_video(video_url: str, language: str = 'en') -> str:
     """
     Расшифровка видео с таймкодами
     """
-    print("Downloading and processing audioooooooooooo")
+    logger.info("Downloading and processing audio")
     audio_path = download_audio_from_video(video_url)
 
-    print("Loading Whisper model")
-    model = WhisperModel("base", device="cpu", compute_type="int8")
+    logger.info("Loading Whisper model")
+    model = WhisperModel(WHISPER_MODEL, device="cpu", compute_type="int8")
 
-    print("Транскрибация")
+    logger.info("Transcription")
     segments, _ = model.transcribe(audio_path, language=language)
 
     lines = []

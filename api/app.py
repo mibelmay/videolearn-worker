@@ -18,4 +18,4 @@ async def generate_questions(req: VideoRequest):
     loop = asyncio.get_event_loop()
     transcription = await loop.run_in_executor(None, transcribe_video, req.video_url, req.language)
     questions = await generate_questions_with_mistral(transcription)
-    return {"questions": questions}
+    return questions

@@ -7,6 +7,8 @@ import asyncio
 from dotenv import load_dotenv
 from fastapi import HTTPException
 
+from src.validation.validator import validate_and_normalize_questions
+
 load_dotenv()
 
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
@@ -45,11 +47,12 @@ async def generate_questions_with_mistral(
     data = {
         "model": MISTRAL_MODEL_NAME, 
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.6,
+        "temperature": 0.7,
     }
 
     try:
         async with aiohttp.ClientSession() as session:
+            logger.info("MistralAPI reference")
             async with session.post(MISTRAL_API_URL, headers=headers, json=data, timeout=300) as resp:
                 if resp.status != 200:
                     text = await resp.text()
@@ -62,11 +65,13 @@ async def generate_questions_with_mistral(
                 cleaned = (
                     content.replace("```json", "")
                     .replace("```", "")
+                    .replace("*", "")
                     .strip()
                 )
 
+                logger.info("Response validation")
                 try:
-                    parsed = json.loads(cleaned)
+                    parsed = validate_and_normalize_questions(cleaned)
                     return parsed
                 except json.JSONDecodeError:
                     logger.warning("Failed to parse JSON from Mistral")
