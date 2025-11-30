@@ -3,6 +3,7 @@ import tempfile
 import ffmpeg
 import yt_dlp
 import logging
+from datetime import datetime
 from faster_whisper import WhisperModel
 from dotenv import load_dotenv
 
@@ -58,7 +59,7 @@ def download_audio_from_video(video_url: str) -> str:
 def format_timestamp(seconds: float) -> str:
     h, rem = divmod(int(seconds), 3600)
     m, s = divmod(rem, 60)
-    return f"[{h}:{m}:{s}]"
+    return f"[{h:02d}:{m:02d}:{s:02d}]"
 
 
 def transcribe_video(video_url: str, language: str = 'en') -> str:
@@ -79,5 +80,6 @@ def transcribe_video(video_url: str, language: str = 'en') -> str:
         end = format_timestamp(segment.end)
         text = segment.text.strip()
         lines.append(f"{end} {text}")
-
+    
+    logger.info("Successfull transciption")
     return "\n".join(lines)

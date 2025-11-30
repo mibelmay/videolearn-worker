@@ -8,7 +8,7 @@ Each question must reference a specific timestamp from the text and be in one of
 A question with 3-4 possible answers, where one or more are correct.
 {
   "type": "multiple_choice",
-  "timecode": "hh:mm:ss",
+  "timecode": "h:m:s",
   "question_text": "question_text",
   "options": [
     {"text": "answer_text1", "correct": true},
@@ -22,14 +22,14 @@ A question where the user must write an answer in their own words.
 No predefined correct answer.
 {
   "type": "open_ended",
-  "timecode": "hh:mm:ss",
+  "timecode": "h:m:s",
   "question_text": "question_text"
 }
 3. True/False question
 A statement that can be either true or false.
 {
   "type": "true_false",
-  "timecode": "hh:mm:ss",
+  "timecode": "h:m:s",
   "question_text": "question_text",
   "answer": true
 }
@@ -38,7 +38,7 @@ Match items from two lists (for example, terms and their definitions).
 All provided pairs must be correct.
 {
   "type": "matching",
-  "timecode": "hh:mm:ss",
+  "timecode": "h:m:s",
   "question_text": "Match each technology with its purpose.",
   "pairs": [
     {"left": "Docker", "right": "Containerization of applications"},
@@ -56,8 +56,10 @@ Guidelines
 - Each question should be tied to a specific timecode from the transcript.
 - For each question, the "timecode" MUST BE COPIED EXACTLY from the transcript.
 - Do NOT convert, modify, reformat, or recalculate timestamps.
+- Generate a diverse set of question types.
 - Do not include explanations outside the JSON.
-- Generate 4 questions - exactly one of each type: multiple_choice, open_ended, true_false, matching.
+- Include all four question types: multiple_choice, open_ended, true_false, matching.
+- Create at least 10 questions.
 - Return ONLY pure JSON. No Markdown, no comments, no explanations.
 - Keys and strings MUST use double quotes.
 
