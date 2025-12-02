@@ -54,7 +54,7 @@ Return strictly valid JSON array containing multiple questions of various types,
 Guidelines
 - All questions and answers must be in English.
 - Each question should be tied to a specific timecode from the transcript.
-- For each question, the "timecode" MUST BE COPIED EXACTLY from the transcript.
+- For each question, the "timecode" MUST BE COPIED EXACTLY from the transcript, but without brackets.
 - Do NOT convert, modify, reformat, or recalculate timestamps.
 - Generate a diverse set of question types.
 - Do not include explanations outside the JSON.

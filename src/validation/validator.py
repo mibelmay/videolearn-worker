@@ -1,5 +1,19 @@
 import json
 from typing import Any, Dict, List
+import logging
+import re
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
+logger = logging.getLogger("videolearn")
+
+
+def clean_timecode(timecode_str: str) -> str:
+    """Удаляет квадратные скобки из timecode"""
+    if not timecode_str:
+        return ""
+    return re.sub(r'[\[\]]', '', timecode_str.strip())
 
 
 def normalize_question(raw: Dict[str, Any]) -> Dict[str, Any]:
@@ -17,7 +31,7 @@ def normalize_question(raw: Dict[str, Any]) -> Dict[str, Any]:
     question = {
         "type": qtype,
         "question_text": raw.get("question_text") or raw.get("question") or "",
-        "timecode": raw.get("timecode") or raw.get("time") or "",
+        "timecode": clean_timecode(raw.get("timecode") or raw.get("time") or ""),
         "points": raw.get("points", 0),
     }
 
